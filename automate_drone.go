@@ -40,7 +40,7 @@ func main() {
 			fmt.Println(err)
 			return
 		}
-		// Event: Listening the Tello connect event to start the video streaming.
+		// Event: Listening the drone connect event to start the video streaming from drone.
 		drone.On(tello.ConnectedEvent, func(data interface{}) {
 			fmt.Println("Connected to Tello.")
 			drone.StartVideo()
@@ -53,7 +53,7 @@ func main() {
 			})
 		})
 
-		//Event: Piping the video data into the FFMPEG function.
+		//Event: Piping the video data from drone into the FFMPEG library installed in mac.
 		drone.On(tello.VideoFrameEvent, func(data interface{}) {
 			pkt := data.([]byte)
 			if _, err := ffmpegIn.Write(pkt); err != nil {
@@ -73,7 +73,7 @@ func main() {
 			fmt.Println("Tello Landing...")
 		})
 	}
-	//Robot: Tello Drone
+	//Robot: Tello (Drone)
 	robot := gobot.NewRobot("tello",
 		[]gobot.Connection{},
 		[]gobot.Device{drone},
